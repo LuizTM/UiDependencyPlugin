@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style type="text/css">
+  .node {
+    cursor: pointer;
+  }
+
+  .overlay {
+    min-height: 100vh;
+    background-color: #EEE;
+    width: 100%;
+    height: 100%;
+  }
+
+  .node circle {
+    fill: #fff;
+    stroke: rgb(70, 180, 83);
+    stroke-width: 1.5px;
+  }
+
+  .node text {
+    font-size: 15px;
+    font-family: sans-serif;
+  }
+
+  .link {
+    fill: none;
+    stroke: #ccc;
+    stroke-width: 1.5px;
+  }
+
+  /* .templink {
+    fill: none;
+    stroke: red;
+    stroke-width: 3px;
+  } */
+
+  .ghostCircle.show {
+    display: block;
+  }
+
+  .ghostCircle,
+  .activeDrag .ghostCircle {
+    display: none;
+  }
+
+  .tooltip {
+    position: absolute;
+    font-family: 'Trebuchet MS', sans-serif;
+    pointer-events: none;
+  }
+
+  .search {
+    width: 400px;
+  }
+
+  #search {
+    width: 400px;
+  }
+
+
+
+
+
+</style>
+
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col col-lg-4">
+            <div class="mt-2">
+                <select id="search">
+                    </option>
+                </select>
+                <button type="button" class="btn btn-secondary btn-sm btn-block" id="btnReset"
+                        style="--bs-btn-padding-y: .20rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .85rem;">
+                    Reset
+                </button>
+            </div>
+            <div class="card mt-3 shadow">
+                <span class="border border-success"></span>
+                <div class="card-body">
+                    <h5 class="card-title">Output Annotations Dependency</h5>
+                    <p class="card-text">
+                    <h6 class="fw-bold">(*)</h6>Indicates repeated occurrences of a transitive dependency subtree.
+                    Gradle expands transitive dependency subtrees only once per project; repeat
+                    occurrences only display the root of the subtree, followed by this
+                    annotation.
+                    </p>
+                    <!--                    <p class="card-text">-->
+                    <!--                        WIP (c): This element is a dependency constraint, not a dependency. Look for the-->
+                    <!--                        matching dependency elsewhere in the tree.-->
+                    <!--                    </p>-->
+                    <!--                    <p class="card-text">-->
+                    <!--                        WIP (n): A dependency or dependency configuration that cannot be resolved.-->
+                    <!--                    </p>-->
+                    <a href="https://docs.gradle.org/current/userguide/viewing_debugging_dependencies.html#output_annotations"
+                       class="card-link">more details here!</a>
+                </div>
+            </div>
+            <div class="card mt-3 shadow">
+                <span class="border border-success"></span>
+                <div class="card-body">
+                    <h5 class="card-title">Version conflict resolution</h5>
+                    <!--                    <h6 class="card-subtitle mb-1 text-muted fw-bold">(->)</h6>-->
+                    <p class="card-text">
+                    <h6 class="fw-bold">(->)</h6>Gradle tries to resolve conflicted versions automatically, by default the latest version is chosen
+                    </p>
+                    <a href="https://docs.gradle.org/current/userguide/dependency_resolution.html#sec:version-conflict"
+                       class="card-link">more details here!</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div id="tree-container"></div>
+        </div>
+    </div>
+</div>
+</body>
+
+<link href="res/css/bootstrap.min.css" rel="stylesheet">
+<script src="res/bootstrap.bundle.min.js"></script>
+
+
+<script src="res/jquery-3.3.1.min.js"></script>
+<!-- Select2 CSS -->
+<link href="res/css/select2.min.css" rel="stylesheet"/>
+
+<!-- Select2 JS -->
+<script src="res/select2.min.js"></script>
+
+<script src="res/d3.v5.min.js"></script>
+<script src="dndTree%file-js%.js"></script>
+
+</html>

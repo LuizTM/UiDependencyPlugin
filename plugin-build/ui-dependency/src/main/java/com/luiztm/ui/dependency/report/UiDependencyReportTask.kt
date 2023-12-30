@@ -2,6 +2,7 @@ package com.luiztm.ui.dependency.report
 
 import com.luiztm.ui.dependency.internal.extensions.getSafeResourceAsStream
 import com.luiztm.ui.dependency.internal.extensions.getTextResourceContent
+import com.luiztm.ui.dependency.internal.extensions.printOutputMessage
 import java.io.File
 import javax.inject.Inject
 import org.apache.commons.io.FileUtils
@@ -11,18 +12,18 @@ import org.gradle.api.provider.Property
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
 
-abstract class UiDependencyReportTask @Inject constructor(private val project: Project) : DefaultTask() {
+abstract class UiDependencyReportTask @Inject constructor(
+    private val project: Project
+) : DefaultTask() {
 
     init {
-        description = "Just a sample template task"
-
-        // Don't forget to set the group here.
-        // group = BasePlugin.BUILD_GROUP
+        description = "Generate a simple UI tree to display your Gradle dependencies"
+        group = "UI Dependencies Tree"
     }
 
-    private val rawJS: String = getTextResourceContent("dndTree-template.js")
-    private val rawHTML: String = getTextResourceContent("index-template.html")
-    private val savePath = project.layout.buildDirectory.dir("tree-deps").get()
+    private val rawJS: String by lazy { getTextResourceContent("uiTreeView-template.js") }
+    private val rawHTML: String by lazy { getTextResourceContent("index-template.html") }
+    private val savePath = project.layout.buildDirectory.dir("ui-dependencies-plugin").get()
 
     private val filesPath: List<String> = listOf(
         "res/d3.v5.min.js",
@@ -32,18 +33,11 @@ abstract class UiDependencyReportTask @Inject constructor(private val project: P
         "res/bootstrap.bundle.min.js",
         "res/css/select2.min.css",
         "index-template.html",
-        "dndTree-template.js"
+        "uiTreeView-template.js"
     )
 
     @get:Input
     abstract val data: Property<String>
-//
-//    @get:OutputFiles
-//    val outputFiles: ConfigurableFileCollection =
-//        project.objects.fileCollection().from(
-//            project.layout.buildDirectory.file("dndTree-${project.name}.js"),
-//            project.layout.buildDirectory.file("index-${project.name}.html")
-//        )
 
     @TaskAction
     fun process() {
@@ -54,14 +48,17 @@ abstract class UiDependencyReportTask @Inject constructor(private val project: P
             )
         }
 
-        File("$savePath/dndTree-${project.name}.js")
+        File("$savePath/uiTreeView-${project.name}.js")
             .writeText(rawJS.replace("%json_here%", data.get()))
 
-        File("$savePath/index-${project.name}.html")
-            .writeText(rawHTML.replace("%file-js%", "-${project.name}"))
+        val pathIndexFile = File("$savePath/index-${project.name}.html").apply {
+            writeText(rawHTML.replace("%file-js%", "-${project.name}"))
+        }
+
+        logger.printOutputMessage(pathIndexFile)
     }
 
     companion object {
-        const val TASK_NAME = "uiTreeDependency"
+        const val TASK_NAME = "showUiDependencies"
     }
 }

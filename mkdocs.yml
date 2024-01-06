@@ -1,0 +1,45 @@
+site_name: UI Dependency Plugin
+site_url: https://luiztm.github.io/UiDependencyPlugin/
+repo_name: UiDependencyPlugin
+repo_url: https://github.com/LuizTM/UiDependencyPlugin
+site_author: Luiz T
+
+copyright: 'Copyright (C) 2024 LuizTM'
+
+theme:
+  name: 'material'
+  palette:
+    primary: 'green'
+    accent: 'teal'
+  features:
+    - navigation.sections
+    - navigation.tracking
+    - navigation.tabs
+    - content.tabs.link
+    - toc.integrate
+
+nav:
+  - Home: index.md
+
+markdown_extensions:
+  - smarty
+  - codehilite:
+      guess_lang: false
+  - footnotes
+  - meta
+  - toc:
+      permalink: true
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.inlinehilite
+  - pymdownx.magiclink
+  - pymdownx.smartsymbols
+  - pymdownx.superfences
+  - pymdownx.tilde
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - admonition
+  - pymdownx.details
+  - tables

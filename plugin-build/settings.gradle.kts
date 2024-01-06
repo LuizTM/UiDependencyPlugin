@@ -18,6 +18,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = ("com.luiztm.ui.dependency.plugin")
+rootProject.name = ("ui.dependency.plugin")
 
 include(":ui-dependency")

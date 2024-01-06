@@ -1,5 +1,21 @@
 package com.luiztm.ui.dependency.internal.mapper
 
+/**
+Copyright (C) 2024 LuizTM
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+https://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+ */
+
 import com.luiztm.ui.dependency.internal.style.UiColorSchema
 import com.luiztm.ui.dependency.internal.model.ArtifactModule
 import com.luiztm.ui.dependency.internal.model.UiNode
@@ -40,7 +56,7 @@ private fun ResolvedDependencyResult.resolveModuleType(
     nestedUiNode: (MutableSet<out DependencyResult>) -> List<UiNode>
 ): UiNode {
     return UiNode(
-        name = "${value.module}:${value.selectedVersion(this)}".formatWhen(alreadyRendered),
+        name = "${value.module}:${value.selectedVersion(this)}",
         isProject = false,
         artifact = ArtifactModule(
             artifactId = value.module,
@@ -68,14 +84,11 @@ private fun ResolvedDependencyResult.resolveProjectType(
     )
 }
 
-private fun String.formatWhen(alreadyRendered: Boolean): String =
-    if (alreadyRendered) "(*)$this" else this
-
 private fun ModuleComponentSelector.selectedVersion(original: ResolvedDependencyResult): String {
     return if (this.matchesStrictly(original.selected.id)) {
         this.version
     } else {
         val moduleVersion = (original.selected.id as DefaultModuleComponentIdentifier).version
-        if (version.isEmpty()) moduleVersion else "${this.version} -> $moduleVersion"
+        if (version.isEmpty()) moduleVersion else "${this.version} 🔺 $moduleVersion"
     }
 }

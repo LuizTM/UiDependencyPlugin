@@ -45,7 +45,7 @@ function process(treeData) {
             d.children.forEach(select2DataCollectName);
         else if (d._children)
             d._children.forEach(select2DataCollectName);
-        if (!d.children) select2Data.push(d.data.name);
+        if (!d.children) select2Data.push(d.data);
     }
 
     //===============================================
@@ -426,6 +426,14 @@ function process(treeData) {
             })
             .style("fill-opacity", 0);
 
+            /* Create the text for each block */
+            nodeEnter.append("text")
+              .text(function(d){ return d.data.alreadyRendered ? "♻️" : "" })
+              .attr("dy", function(d) { return 15/((15*15)/100); })
+              .attr("dx", function(d) { return -10; })
+              .style("font-size", function(d) { return 20; })
+              .attr("text-anchor", "start");
+
 
         // Update the text to reflect whether node has children or not.
         node.select('text')
@@ -551,18 +559,20 @@ function process(treeData) {
     select2DataCollectName(root);
     select2DataObject = [];
     select2Data.sort(function (a, b) {
-        if (a > b) return 1; // sort
-        if (a < b) return -1;
+        if (a.name > b.name) return 1; // sort
+        if (a.name < b.name) return -1;
         return 0;
     })
-        .filter((word) => word.indexOf('*') !== 1)
+//        .filter((data) => !data.alreadyRendered)
         .filter(function (item, i, ar) {
-            return ar.indexOf(item) === i;
+            return i === ar.findIndex((t) => (
+                t.name === item.name
+            ))
         }) // remove duplicate items
         .filter(function (item, i, ar) {
             select2DataObject.push({
                 "id": i,
-                "text": item
+                "text": item.name
             });
         });
     $("#search").scroll(function () {

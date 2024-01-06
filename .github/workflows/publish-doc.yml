@@ -51,7 +51,7 @@ jobs:
           # sed -i "s/<latest-version>/$(git describe --tags --abbrev=0)/" docs/other.md
 
       - name: Build MkDocs
-        run: mkdocs build
+        run: mkdocs build --clean
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

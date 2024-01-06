@@ -10,7 +10,7 @@ theme:
   name: 'material'
   palette:
     primary: 'green'
-    accent: 'teal'
+    accent: 'purple'
   features:
     - navigation.sections
     - navigation.tracking

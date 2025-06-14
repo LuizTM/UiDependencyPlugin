@@ -35,7 +35,20 @@ android {
     }
 }
 
-dependencies{
+uiTreeExtension {
+    constraints = { group, artifact, _ ->
+        group == "androidx.datastore" &&
+            artifact == "datastore-core"
+    }
+
+    with(style) {
+        dependencyNodeColor = "#3DDC84"
+        linkStrokeColor = "#CCC"
+    }
+}
+
+dependencies {
+    implementation(project(":sub-example"))
     implementation(platform(examplelibs.androidx.compose.bom))
     implementation(examplelibs.androidx.compose.foundation)
     implementation(examplelibs.androidx.compose.foundation.layout)
@@ -50,6 +63,7 @@ dependencies{
 
     implementation(examplelibs.androidx.core.ktx)
     implementation(examplelibs.androidx.appcompat)
+    implementation(examplelibs.androidx.dataStore.core)
     implementation(examplelibs.androidx.activity.compose)
     implementation(examplelibs.coil.kt.compose)
 

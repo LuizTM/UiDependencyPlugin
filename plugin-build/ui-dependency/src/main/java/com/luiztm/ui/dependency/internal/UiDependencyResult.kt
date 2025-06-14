@@ -36,14 +36,14 @@ internal class UiDependencyResult(
 
     fun provide(): String {
         val result = target
-            .filterDependencies(extension)
-            .mapTreeNodeDependencies(extension.style)
+            .filterConfiguration(extension)
+            .mapTreeNodeDependencies(extension)
             .build(target.path, extension.style)
 
         return Gson().toJson(result)
     }
 
-    private fun Project.filterDependencies(extension: UiTreeExtension): ResolvedComponentResult {
+    private fun Project.filterConfiguration(extension: UiTreeExtension): ResolvedComponentResult {
         val configuration = project.configurations
             .filter { it.isCanBeResolved }
             .filter { config ->
@@ -60,8 +60,23 @@ internal class UiDependencyResult(
         return configuration.incoming.resolutionResult.root
     }
 
-    private fun ResolvedComponentResult.mapTreeNodeDependencies(extension: UiColorSchema): List<UiNode> {
-        return dependencies.flatMap { transformToChild(mutableSetOf(it), extension = extension) }
+    private fun ResolvedComponentResult.mapTreeNodeDependencies(extension: UiTreeExtension): List<UiNode> {
+
+        fun deepFilterSearch(node: UiNode, target: UiTreeExtension): UiNode? {
+            if (extension.constraints == null) return node
+            node.children.forEach { item ->
+                val (artifactId, group, version) = item.artifact ?: return null
+                if (extension.constraints?.invoke(group, artifactId, version) == true ||
+                    deepFilterSearch(item, target) != null) {
+                    return node
+                }
+            }
+            return null
+        }
+
+        return dependencies
+            .flatMap { transformToChild(mutableSetOf(it), style = extension.style) }
+            .mapNotNull { deepFilterSearch(it, extension) }
     }
 
     private fun List<UiNode>.build(projectName: String, extension: UiColorSchema) =
@@ -74,14 +89,17 @@ internal class UiDependencyResult(
     private fun transformToChild(
         dep: MutableSet<out DependencyResult>,
         visited: MutableSet<ComponentIdentifier> = mutableSetOf(),
-        extension: UiColorSchema
+        style: UiColorSchema,
+        depth: Int = 0
     ): List<UiNode> {
-        return dep.filterIsInstance<ResolvedDependencyResult>().map {
-            val alreadyVisited = !visited.add(it.selected.id)
-            val alreadyRendered = it.selected.dependencies.isNotEmpty() && alreadyVisited
-            it.mapChildNode(it.requested, extension, alreadyRendered) { selectedDep ->
-                transformToChild(selectedDep, visited, extension)
+        println("Max recursion depth=$depth reached!")
+        return dep.filterIsInstance<ResolvedDependencyResult>()
+            .map {
+                val alreadyVisited = !visited.add(it.selected.id)
+                val alreadyRendered = it.selected.dependencies.isNotEmpty() && alreadyVisited
+                it.mapChildNode(it.requested, style, alreadyRendered) { selectedDep ->
+                    transformToChild(selectedDep, visited, style, depth + 1)
+                }
             }
-        }
     }
 }

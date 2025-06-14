@@ -1,4 +1,4 @@
-package com.luiztm.ui.dependency.internal.extensions
+package com.luiztm.ui.dependency.extensions
 
 /**
 Copyright (C) 2024 LuizTM
@@ -16,7 +16,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
  */
 
-import com.luiztm.ui.dependency.internal.extensions.TypeConfiguration.RuntimeClasspath
+import com.luiztm.ui.dependency.extensions.TypeConfiguration.RuntimeClasspath
 import com.luiztm.ui.dependency.internal.style.UiColorSchema
 
 /**
@@ -46,7 +46,8 @@ open class UiTreeStyle(
 
 open class UiTreeExtension(
     internal var configuration: TypeConfiguration = RuntimeClasspath(),
-    var style: UiColorSchema = UiTreeStyle()
+    val style: UiColorSchema = UiTreeStyle(),
+    var constraints: ((group: String?, artifact: String?, version: String?) -> Boolean)? = null
 ) {
     companion object {
         const val EXTENSION_NAME = "uiTreeExtension"
@@ -54,7 +55,7 @@ open class UiTreeExtension(
 }
 
 sealed class TypeConfiguration(val type: String, val variant: String = "") {
-    class RuntimeClasspath(variant: String = "") : TypeConfiguration("runtimeClassPath", variant)
+    class RuntimeClasspath(variant: String = "") : TypeConfiguration("debugRuntimeClasspath", variant)
 
     // Some problems identify when use it!
     // class CompileClasspath(variant: String = "") : TypeConfiguration("compileClassPath", variant)

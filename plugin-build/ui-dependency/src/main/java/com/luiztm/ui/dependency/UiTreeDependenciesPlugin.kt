@@ -16,9 +16,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
  */
 
-import com.luiztm.ui.dependency.internal.extensions.UiTreeExtension
+import com.luiztm.ui.dependency.extensions.UiTreeExtension
 import com.luiztm.ui.dependency.report.UiDependencyReportTask
-import com.luiztm.ui.dependency.report.UiDependencyResult
+import com.luiztm.ui.dependency.internal.UiDependencyResult
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.create

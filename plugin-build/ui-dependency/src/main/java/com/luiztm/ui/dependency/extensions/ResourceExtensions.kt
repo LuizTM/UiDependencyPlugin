@@ -1,4 +1,4 @@
-package com.luiztm.ui.dependency.internal.extensions
+package com.luiztm.ui.dependency.extensions
 
 /**
 Copyright (C) 2024 LuizTM

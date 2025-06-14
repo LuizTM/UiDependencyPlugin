@@ -21,4 +21,5 @@ dependencyResolutionManagement {
 rootProject.name = "ui-dependency-plugin"
 
 include(":example")
+include(":sub-example")
 includeBuild("plugin-build")

@@ -2,6 +2,7 @@ import io.gitlab.arturbosch.detekt.Detekt
 
 plugins {
     alias(examplelibs.plugins.android.application) apply false
+    alias(examplelibs.plugins.android.library) apply false
     alias(libs.plugins.kotlin) apply false
     alias(libs.plugins.detekt)
     alias(libs.plugins.ktlint)

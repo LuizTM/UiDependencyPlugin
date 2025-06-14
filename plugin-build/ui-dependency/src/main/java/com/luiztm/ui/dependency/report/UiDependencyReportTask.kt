@@ -16,9 +16,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
  */
 
-import com.luiztm.ui.dependency.internal.extensions.getSafeResourceAsStream
-import com.luiztm.ui.dependency.internal.extensions.getTextResourceContent
-import com.luiztm.ui.dependency.internal.extensions.printOutputMessage
+import com.luiztm.ui.dependency.extensions.getSafeResourceAsStream
+import com.luiztm.ui.dependency.extensions.getTextResourceContent
+import com.luiztm.ui.dependency.extensions.printOutputMessage
 import java.io.File
 import javax.inject.Inject
 import org.apache.commons.io.FileUtils

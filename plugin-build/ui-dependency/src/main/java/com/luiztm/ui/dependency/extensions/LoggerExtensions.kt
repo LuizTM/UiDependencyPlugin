@@ -1,4 +1,4 @@
-package com.luiztm.ui.dependency.internal.extensions
+package com.luiztm.ui.dependency.extensions
 
 /**
 Copyright (C) 2024 LuizTM
@@ -29,6 +29,7 @@ internal fun Logger.printOutputMessage(outputFile: File) {
                     append("=")
                 }
             }
+            appendLine("$divider ")
             appendLine("""
                               X
                     +-------------------+
@@ -40,7 +41,6 @@ internal fun Logger.printOutputMessage(outputFile: File) {
             +--+ +--+ +--+ +--+ +--+ +--+ +--+ +--+
             X  X X  X X  X X  X X  X X  X X  X X  X
             """.trimMargin())
-            appendLine("$divider ")
             appendLine()
             appendLine(" ${ConsoleRenderer().asClickableFileUrl(outputFile)} ")
             appendLine()

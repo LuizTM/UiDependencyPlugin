@@ -1,4 +1,4 @@
-package com.luiztm.ui.dependency.report
+package com.luiztm.ui.dependency.internal
 
 /**
 Copyright (C) 2024 LuizTM
@@ -17,12 +17,12 @@ limitations under the License.
  */
 
 import com.google.gson.Gson
-import com.luiztm.ui.dependency.internal.extensions.UiTreeExtension
+import com.luiztm.ui.dependency.extensions.UiTreeExtension
 import com.luiztm.ui.dependency.internal.mapper.mapChildNode
-import com.luiztm.ui.dependency.internal.style.UiColorSchema
 import com.luiztm.ui.dependency.internal.model.UiNode
 import com.luiztm.ui.dependency.internal.model.UiRootNode
 import com.luiztm.ui.dependency.internal.model.toNodeStyle
+import com.luiztm.ui.dependency.internal.style.UiColorSchema
 import org.gradle.api.Project
 import org.gradle.api.artifacts.component.ComponentIdentifier
 import org.gradle.api.artifacts.result.DependencyResult
